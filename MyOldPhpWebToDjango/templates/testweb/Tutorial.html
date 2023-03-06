@@ -1,0 +1,91 @@
+<!-- /templates/index.html -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+      歡迎來到我的部落格 (測試頁)
+    </title>
+</head>
+<body>
+  <h1>歡迎來到我的部落格 (測試頁)</h1>
+  <hr>
+	<ul>
+		<li>
+        <a href="/admin">admin</a>
+		</li>
+		<li>
+        <a href="/about">about</a>
+		</li>
+		<li>
+			<a href="https://meet.google.com/qsf-yrth-omw">Meeting</a>
+		</li>
+		<li>
+			<a href="https://coggle.it/diagram/Y66YOfnDY3PfPvEZ/t/meeting">Coggle</a>
+		</li>
+		<li>
+      list
+		</li>
+    <ul>
+      <li><a href="/test/list">          (use_post  [submit]):localhost/test/list/</a></li>
+      <li><a href="/test/list/23/03/04/">(use_get   [int:yr/int:mon/int:day]):localhost/test/list/23/03/04</a></li>
+    </ul>
+
+    <li>
+      Try GET
+    </li>
+    <ul>
+      <li>
+          <a href="/test/age_form/">age_form</a>
+      </li>
+      <li>
+          <a href="/test/age/?age_in=30">localhost/test/age/?age_in=30</a>
+      </li>
+    </ul>
+
+
+    <li>
+      Try POST
+    </li>
+    <ul>
+      <li>
+        <a href="/test/mail_form/">mail</a>
+      </li>
+    </ul>
+    <li>ForOrchidWeb (或許後續可以拿來使用)</li>
+    <ul>
+      <li>
+        <a href="/V3deg">V3deg</a>
+      </li>
+      <li>
+        <a href="/OrchidLogin/">OrchidLogin</a>
+      </li>
+      <li>
+        <a href="/OrchidMain/">OrchidMain</a>
+      </li>
+      <li>
+        <a href="/DjangoForm/">DjForm</a>
+      </li>
+    </ul>
+	</ul>
+  {% load markdown_deux_tags %}
+  {% for x in content_posts %}
+      <p style='font-family: 微軟正黑體;font-size:16pt;font-weight:bold;'>
+    <!-- <a href="/post/{{x.title}}">{{x.title}}</a> -->
+    <a href="/post">{{x.title}}</a>
+      </p>
+      <p style='font-family: 微軟正黑體;font-size:10pt;letter-spacing:1pt;'>
+      [此文章發佈於:{{x.pub_date}}]<br>   <!-- 課堂練習~ -->
+      <!--{{x.body}}-->
+      {{x.body|linebreaksbr|markdown}}
+      </p>
+      {% if x.pumps %}
+      <h4>class : {{x.pumps}}</h4>
+      {% endif %}
+  {% endfor %}
+
+
+  <hr>
+  <h3>現在時間:{{now}}</h3>
+</body>
+</html>
+

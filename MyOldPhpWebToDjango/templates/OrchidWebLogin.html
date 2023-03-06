@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}蘭花智慧育種登入介面{% endblock %}
+{% block other %}
+<link rel="stylesheet" href="/static/css/custom-bs-button.css">
+{% endblock %}
+{% block header %}
+  {% include 'header.html' %}
+{% endblock %}
+{% block neck %}
+  <!-- <div class="alert alert-info"> -->
+  <!--   {#% include 'neck.html' %#} -->
+  <!-- </div> -->
+{% endblock %}
+{% block lefthand %}
+  {#% include "leftmenu.html" %#}
+{% endblock %}
+
+{% block main_typesetting %}
+<!-- <div class='col-sm-8 col-md-8'> -->
+<!-- <div class='col-sm'> -->
+{% endblock %}
+
+{% block add_card_atrr %}
+{% endblock %}
+
+
+{% block add_card_header_style %}
+text-center text-bg-primary bg-blue text-white
+{% endblock %}
+{% block card_header %}
+<h3>登入</h3>
+{% endblock %}
+{% block content %}
+ <!-- <div class='container' style="height: 450px;"> -->
+    <!-- <div class='panel panel-primary'> -->
+    <!-- <div class='card'> -->
+        <!-- <div class='panel-heading'> -->
+        <!-- <div class='card-header'> -->
+            <!-- <form name='my form' action='.' method='POST'> -->
+            <!--   {% csrf_token %} -->
+            <!--   <input id="MyMSG" type="text" name="MyMSG"> -->
+            <!--   <h3>傳個值 (寫信給管理員)</h3> -->
+        <!-- </div> -->
+        <!-- <div class='panel-body'> -->
+      <form name='my form' action='.' method='POST' style="height: 350px;">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <table class="table table-responsive">
+              <!-- <input id="MyMSG" type="text" name="MyMSG"> -->
+              <!-- <h3>傳個值 (寫信給管理員)</h3> -->
+              <!-- <div class='card-body'> -->
+                  <!-- {{ form.as_p }} -->
+                  {{ form.as_table }}
+              <!-- </div> -->
+              <!-- <div class='panel-footer'> -->
+            </table>
+             <div class="form-group custom-form">
+                  <input class="form-control" type='submit' value='送出'>
+            </div>
+         </div>
+        </div>
+      </form>
+      {% if user_name %}
+      <!-- <div class='alert alert-warning'> -->
+      <div class='p-3 mb-3 text-bg-warning'>
+        <h1>PASS</h1>
+      {{ user_name }}
+      </div>
+      
+      {% endif %}
+      {% if user_name %}
+
+      <!-- <div class='alert alert-warning'> -->
+      <div class='p-3 mb-3 text-bg-warning'>
+       {% comment %}
+         {{ user_name }}
+       {% endcomment %}
+      </div>
+      <hr />
+      {{ Log }}
+      <hr/ >
+      {{ user_name }}<br/>
+      {{ user_password }}<br/>
+      {% endif %}
+            
+    <!-- </div> -->
+<!-- </div> -->
+{% endblock %}
+
+{% block card_footer %}
+{% endblock %}
+{% block footer %}
+  {% include 'footer.html' %}
+{% endblock %}
+
