@@ -57,3 +57,8 @@ https://blog.csdn.net/weixin_35757704/article/details/113421562
         { % load static from staticfiles %}
          {% load admin_static %}
 ==>   後來全部統一改 {% load static %}
+
+自動化寫 model 可以使用以下代碼 add_verbose.sh 為我寫的 shell 可以將資料加上 verbose_name
+(若表格已存在請先在 models 註解後執行 : python manage.py makemigrations; python manage.py migrate)
+python manage.py inspectdb DegradomeResult | sh add_verbose.sh >> app2/models.py
+之後跑 python manage.py makemigrations; python manage.py migrate

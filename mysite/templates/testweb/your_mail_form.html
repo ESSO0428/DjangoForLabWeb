@@ -1,0 +1,17 @@
+<!-- csrf 必須放在 form 後才能 post 成功-->
+<html>
+  <body>
+      <p>請輸入你的名字和 mail</p>
+      <form action="/test/mail/" method="post">{% csrf_token %}
+      <p>你的名字:
+        <input type="text" name="user">
+      </p>
+      <p>你的 mail:
+        <input type="text" name="mail">
+      </p>
+      <p>
+        <input type="submit" name="button" id="button" value="送出" />
+      </p>
+    </form>
+  </body>
+</html>

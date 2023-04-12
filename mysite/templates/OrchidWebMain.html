@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Orchid Web{% endblock %}
+{% block header %}
+  {#% with HeadImgPath="/static/images/forest.jpg" %#}
+  {#% with MainTitle="Orchid Web" %#}
+  {#% with SubTitle="Phalaenopsis AI Smart Breeding Platform" %#}
+
+  {#% with MainTitle="My First Bootstrap Page" %#}
+  {#% with SubTitle="Resize this responsive page to see the effect!" %#}
+  {% include 'header.html' %}
+  {#% endwith %#}
+{% endblock %}
+{% block neck %}
+  <!-- <div class="alert alert-info"> -->
+  <!--   {#% include 'neck.html' %#} -->
+  <!-- </div> -->
+{% endblock %}
+
+{% block lefthand %}
+  {% include "leftmenu.html" with colsm='col-sm-4 col-md-4' %}
+{% endblock %}
+
+{% block main_card_atrr %}
+col-sm-8 col-md-8
+{% endblock %}
+<!-- <div class='col-sm'> -->
+
+{% block card_header %}
+{% endblock %}
+
+{% block content %}
+  {% include 'content.html' %}
+{% endblock %}
+{% block card_footer %}
+{% endblock %}
+{% block footer %}
+  {% include 'footer.html' %}
+{% endblock %}
+

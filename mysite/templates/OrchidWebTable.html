@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% comment %}
+pip install django-tables2  --root-user-action=ignore 
+然後將 App 載入 setting.py
+{% endcomment %}
+
+{% load render_table from django_tables2 %}
+{% block title %}Orchid Web{% endblock %}
+{% block other_css %}
+<script src = "/static/js/sorttable.js"></script>
+<style>
+.MyCardScroll {
+  max-height: 800px;
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: scroll;
+  white-space: nowrap;
+  max-width: 300rem;
+}
+table[alt="pre-miRNA"]{
+  border:solid 1px #b6b6b6;
+  // object-fit: contain;
+  // width:100%;
+  // height:100%;
+}
+.paresnip2PDF{
+  //border:solid 1px;
+  //height:650px;
+  width:500px;
+  height:500px;
+  background-color: white;
+}
+</style>
+{% endblock %}
+{% block header %}
+  {% include 'header.html' %}
+{% endblock %}
+{% block neck %}
+  <!-- <div class="alert alert-info"> -->
+  <!--   {#% include 'neck.html' %#} -->
+  <!-- </div> -->
+{% endblock %}
+
+{% block lefthand %}
+  {% include "leftmenu.html" with colsm='col-sm-3 col-md-3' %}
+{% endblock %}
+<!-- col-sm-4 col-md-4 -->
+
+{% block main_card_atrr %}
+col-sm-9 col-md-9
+{% endblock %}
+<!-- col-sm-8 col-md-8 -->
+<!-- <div class='col-sm'> -->
+
+{% comment %}
+{% block card_header %}
+{% endblock %}
+{% endcomment %}
+
+
+{% block add_card_atrr %}
+MyCardScroll
+{% endblock %}
+{% comment %}
+{% block add_card_content_atrr %}
+table-responsive
+{% endblock %}
+{% endcomment %}
+{% block add_card_body_atrr %}
+col-sm-3 col-md-3
+{% endblock %}
+
+{% block add_card_content_atrr %}
+{% endblock %}
+
+{% block content %}
+  {#% render_table content_posts %#}
+  <table class="table TitleFix sortable table-striped table-bordered table-sm w-auto">
+      <tr class="fix_col">
+      {% for col in list_column %}
+        <th>{{col}}</th>
+      {% endfor %}
+    </tr>
+    {#% pip install django-multiforloop %#}
+    {#% django zip package %#}
+    {#% https://github.com/gabrielgrant/django-multiforloop %#}
+    {% load multifor %}
+    {% for col_atrr in list_col_atrr; row in list_row %}
+      <tr>
+          {#% for cell in row %#}
+          {% for cell in row %}
+            <td {{col_atrr|safe}}>{{cell|safe}}</td>
+          {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+  {% if list_Selectparesnip2PDF %}
+    <table>
+      <tr>
+        {% for tplot_info in list_tplot_info %} 
+          <th>
+            <h6><b>{{tplot_info}}</b></h6>
+          </th>
+        {% endfor %}
+      </tr>
+        <tr>
+          {% for Selectparesnip2PDF in list_Selectparesnip2PDF  %}
+            <td>
+              <iframe class="paresnip2PDF" src="/static/images/TplotPDF_Deg/{{Selectparesnip2PDF}}" frameborder="0">
+              </iframe>
+            </td>
+          {% endfor %}
+        </tr>
+    </table>
+  {% endif %}
+  {% if SelectRnaFoldGif %}
+    <table alt="pre-miRNA">
+      <tr>
+        <th>
+          <h3><b>pre-miRNA</b></h3>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <img src="/static/images/RnaFoldImage_Deg/{{SelectRnaFoldGif}}" class="rounded mx-auto d-block" alt="" />
+        </td>
+      </tr>
+    </table>
+  {% endif %}
+{% endblock %}
+{% comment %}
+{% block card_footer %}
+{% endblock %}
+{% block footer %}
+  {% include 'footer.html' %}
+{% endblock %}
+{% endcomment %}
+

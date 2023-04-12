@@ -232,15 +232,67 @@ def aiweblog(request):
 
     return HttpResponse(html)
 
+class DbNameConvert(object):
+
+    """Docstring for DbNameConvert. """
+
+    def __init__(self, ModelName):
+        """TODO: to be defined.
+
+        :ModelName: TODO
+
+        """
+        self.ModelName = ModelName
+        dict_convert = dict()
+        dict_re_convert = dict()
+        for field in ModelName._meta.fields:
+            v, k = field.get_attname_column()
+            dict_convert.update({k : v})
+            dict_re_convert.update({v : k})
+
+        self.dict_convert = dict_convert
+        self.dict_re_convert = dict_re_convert
+    def convert_obj_name(self, db_column):
+        db_column = self.dict_convert[db_column]
+        return db_column
+    def convert_dict_object_name(self, dict_db_column):
+        dict_convert_object_name = dict()
+        for db_column, value in dict_db_column.items():
+            object_name = self.dict_convert[db_column]
+            dict_convert_object_name.update({object_name : value})
+        return dict_convert_object_name
+    def convert_list_object_name(self, list_db_column):
+        list_convert_object_name = list()
+        for db_column in list_db_column:
+            object_name = self.dict_convert[db_column]
+            list_convert_object_name.append(object_name)
+        return list_convert_object_name
+    def re_convert_list_dict_object_name(self, list_dict_db_column):
+        list_dict_convert_object_name = list() 
+        for list_row in list_dict_db_column:
+            dict_convert_object_name = dict()
+            for object_column, cell in list_row.items():
+                db_column = self.dict_re_convert[object_column]
+                dict_convert_object_name.update({db_column : cell})
+            list_dict_convert_object_name.append(dict_convert_object_name)
+        return list_dict_convert_object_name
+
+
 def degradome(request):
     template = get_template('OrchidWebTable.html')
+    DbConvert = DbNameConvert(Degradomeresult)
     # content_posts = DegradomeResult.objects.all()
-    list_column = [f.name for f in DegradomeResult._meta.get_fields()]
+    # list_column = [f.name for f in Degradomeresult._meta.get_fields()]
+    list_column = [field.get_attname_column()[1] for field in Degradomeresult._meta.fields]
     list_column = list_column[1:] 
-    # list_row = [list(i.values()) for i in list(DegradomeResult.objects.all().values())]
-    # list_row = [list(i.values())[1:] for i in list(DegradomeResult.objects.all().values())]
+    # list_row = [list(i.values()) for i in list(Degradomeresult.objects.all().values())]
+    # list_row = [list(i.values())[1:] for i in list(Degradomeresult.objects.all().values())]
     list_order = ['Transcript_ID', 'Cleavage_Position']
+    list_order = DbConvert.convert_list_object_name(list_order)
+    # set_rq_get = {'Transcript_ID', 'Cleavage_Position', 'miRNA_ID'}
     set_rq_get = {'Transcript_ID', 'Cleavage_Position', 'miRNA_ID'}
+    # set_rq_get = ['Transcript_ID', 'Cleavage_Position', 'miRNA_ID']
+    # set_rq_get = set(DbConvert.convert_list_object_name(set_rq_get))
 
     detail_page    = False
     miRNA_seq_page = False
@@ -263,11 +315,12 @@ def degradome(request):
         }
         if GET_click == 'Cleavage_Position':
             dict_filter['Cleavage_Position'] = GET_Cleavage_Position
-        # list_data = list(DegradomeResult.objects.filter(Transcript_ID=GET_Transcript_ID).order_by(*list_order).values())
-        list_data = list(DegradomeResult.objects.filter(**dict_filter).order_by(*list_order).values())
+        dict_filter = DbConvert.convert_dict_object_name(dict_filter)
+        # list_data = list(Degradomeresult.objects.filter(Transcript_ID=GET_Transcript_ID).order_by(*list_order).values())
+        list_data = list(Degradomeresult.objects.filter(**dict_filter).order_by(*list_order).values())
     else:
-        list_data = list(DegradomeResult.objects.all().order_by(*list_order).values())
-
+        list_data = list(Degradomeresult.objects.all().order_by(*list_order).values())
+    list_data = DbConvert.re_convert_list_dict_object_name(list_data)
     list_row                = list()
     list_col_atrr           = list()
     SelectRnaFoldGif        = ""
@@ -278,6 +331,7 @@ def degradome(request):
     else:
         if detail_page:
             DataSet = list_data[0]['DataSet']
+            # print(DataSet)
             list_tissue = list()
             if DataSet == "FM_Only":
                 list_tissue = ["FM"]
@@ -305,10 +359,16 @@ def degradome(request):
     for row in list_data:
         list_one_row      = list()
         
+        # Transcript_ID          = row['Transcript_ID']
+        # Cleavage_Position      = row['Cleavage_Position']
+        # miRNA_ID               = row['miRNA_ID']
+        # miRNA_aligned_fragment = row['miRNA_aligned_fragment'].replace('-', '')
+
         Transcript_ID          = row['Transcript_ID']
         Cleavage_Position      = row['Cleavage_Position']
         miRNA_ID               = row['miRNA_ID']
         miRNA_aligned_fragment = row['miRNA_aligned_fragment'].replace('-', '')
+
         if detail_page and miRNA_seq_page == False:
             if (
                 Transcript_ID == GET_Transcript_ID

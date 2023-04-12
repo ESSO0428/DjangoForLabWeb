@@ -1,0 +1,56 @@
+ {% block title %}連絡管理員{% endblock %}
+ {% block content %}
+ <div class='container'>
+    <!-- <div class='panel panel-primary'> -->
+    <div class='card'>
+      <!-- <div class='panel-heading'> -->
+      <div class='card-header'>
+          <!-- <form name='my form' action='.' method='POST'> -->
+          <!--   {#% csrf_token %#} -->
+          <!--   <input id="MyMSG" type="text" name="MyMSG"> -->
+          <!--   <h3>傳個值 (寫信給管理員)</h3> -->
+      </div>
+      <!-- <div class='panel-body'> -->
+
+      <form name='my form' action='.' method='POST'>
+        {% csrf_token %}
+          <input id="MyMSG" type="text" name="MyMSG">
+          <h3>傳個值 (寫信給管理員)</h3>
+          <div class='card-body'>
+              {{ form.as_p }}
+          </div>
+          <!-- <div class='panel-footer'> -->
+          <div class='card-footer'>
+            <input type='submit' value='送出'>
+          </div>
+      </form>
+            {% if message %}
+            <!-- <div class='alert alert-warning'> -->
+            <div class='p-3 mb-3 text-bg-warning'>
+              <h1>PASS</h1>
+            {{ message }}
+            </div>
+            
+            {% endif %}
+            {% if message %}
+
+            <!-- <div class='alert alert-warning'> -->
+            <div class='p-3 mb-3 text-bg-warning'>
+             {% comment %}
+               {{ message }}
+             {% endcomment %}
+            </div>
+            <hr />
+            {{ Log }}
+            <hr/ >
+            {{ user_name }}<br/>
+            {{ user_city }}<br/>
+            {{ user_school }}<br/>
+            {{ user_email }}<br/>
+            {{ user_message | linebreaks }}<br/>
+            {% endif %}
+            
+    </div>
+</div>
+{% endblock %}
+
