@@ -5,7 +5,7 @@
 >### c. 還有測試是否可使用 appache 來當作 django 的 server
 >### d. 最終結果就是 :
 >>#### 1. 在 admin 介面讀取先前蝴蝶蘭降解組網站的 database table (DB 為 pha_db_n2)
->>#### 2. database 使用 mysql Engine
+>>>#### 2. database 使用 mysql Engine (目前使用 3 個 database 於 mysite 專案，settings.py 可找到我的設定)
 >>#### 3. 環境都建在 container 內 (若有需要 DockerFile 可以再上傳到 github)
 
 # 3. 目前使用 model 的方式與 mysql database 進行溝通 (由於後續發生太多問題，新版本後轉而使用 connections)
@@ -73,12 +73,11 @@
 | templates      | 1. 功能測頁頁和導覽頁皆放在 templates/testweb <Br />2.主要開發頁面放在 templates 內 : <Br /> 模板使用 base.html <Br />, 網站的其它部分被切割為 header.html (網站的頭部的招牌)<Br />neck.html (後續可能皆用不到但先放著)<Br />leftmenu.html (左側功能欄)<Br />content.html<Br />footer.html (最底下的資訊欄)<Br />上述皆為用於主發頁面 include 用的 |
 | templates (續) | DjangoForm.html, OrchidWeb....html 等，即為目前我主要開發的頁面，也是 view 會去 get_template 的對象                                                                                                                                                                                                                                                |
 
-# 資料庫建置 (目前資料庫還是使用 sqlite)
-## 目前用的 db 為 db.sqlite3
-| database                     | 備註                                                         |
-|------------------------------|--------------------------------------------------------------|
-| 範例資料庫                   | 使用先前拿來學習的範例資料庫                                 |
-| app2_degradomereslut (V3deg) | 為先前蘭花網站的資料庫 ctable.sql 為當時建置該資料表用的 sql |
+# 資料庫建置 (已改用 mysql engine)
+| database        | 備註                                     |
+|-----------------|------------------------------------------|
+| 範例資料庫      | 使用先前拿來學習的範例資料庫             |
+| DegradomeResult | localhost/V3deg 網站所用的 database tabe |
 
 
 
